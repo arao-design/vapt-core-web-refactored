@@ -3,13 +3,56 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema VAPT - Gestão de Leilões</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Plataforma de Leilões VAPT</h1>
+        </header>
+
+        <main>
+            <!-- Seção de detalhes do leilão -->
+            <section class="card">
+                <h2>Item em Leilão: <span id="item-nome">Notebook Gamer</span></h2>
+                <p><strong>ID do Leilão:</strong> <span id="leilao-id">1</span></p>
+                <p><strong>Vendedor ID:</strong> <span id="vendedor-id">101</span></p>
+                <p class="lance-destaque">Maior Lance Atual: R$ <span id="maior-lance">1000.00</span></p>
+            </section>
+
+            <!-- Formulário de inclusão de lance -->
+            <section class="card">
+                <h3>Registrar Novo Lance</h3>
+                <form id="form-lance">
+                    <div class="form-group">
+                        <label for="compradorId">ID do Comprador:</label>
+                        <input type="number" id="compradorId" required placeholder="Ex: 102">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="valorLance">Valor do Lance (R$):</label>
+                        <input type="number" step="0.01" id="valorLance" required placeholder="Ex: 1200.00">
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="aceitaTermos">
+                        <label for="aceitaTermos">Aceito os termos antes de dar um lance</label>
+                    </div>
+
+                    <button type="submit" id="btn-submeter">Enviar Lance</button>
+                </form>
+
+                <div id="mensagem-status" class="status-box hidden"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
 </html>

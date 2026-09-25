@@ -5,49 +5,33 @@ package vapt.core.service;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import vapt.core.model.Leilao;
 
 public class LeilaoServiceTest {
-    private LeilaoService leilaoService;
 
-    @BeforeEach
-    public void setUp() {
-        leilaoService = new LeilaoService();
+    @Test
+    public void testRegistrarLanceValido() {
+        LeilaoService service = new LeilaoService();
+        Leilao leilao = new Leilao(1L, "Notebook", 1000.0, 101L);
+
+        service.registrarLance(leilao, 102L, 1200.0, true);
+
+        assertEquals(1200.0, leilao.getMaiorLance(), 0.001);
+        assertEquals(Long.valueOf(102L), leilao.getCompradorVencedorId());
     }
 
     @Test
-    @DisplayName("Deve calcular a taxa da plataforma VAPT de 5% corretamente")
-    public void deveCalcularTaxaPlataformaCorretamente() {
-        double valorLanceFinal = 1000.00;
-        double taxaEsperada = 50.00; // 5% de 1000
+    public void testRegistrarLanceInvalidoSemTermos() {
+        LeilaoService service = new LeilaoService();
+        Leilao leilao = new Leilao(1L, "Notebook", 1000.0, 101L);
 
-        double taxaCalculada = leilaoService.calcularTaxaPlataforma(valorLanceFinal);
-
-        assertEquals(taxaEsperada, taxaCalculada, 0.001, "A taxa da plataforma deve ser exatamente 5% do valor final.");
-    }
-
-    @Test
-    @DisplayName("Deve calcular o valor liquido repassado ao vendedor corretamente")
-    public void deveCalcularValorLiquidoVendedorCorretamente() {
-        double valorLanceFinal = 500.00;
-        double valorLiquidoEsperado = 475.00; // 500 - 25 (5%)
-
-        double valorLiquidoCalculado = leilaoService.calcularValorLiquidoVendedor(valorLanceFinal);
-
-        assertEquals(valorLiquidoEsperado, valorLiquidoCalculado, 0.001, "O valor liquido deve descontar a comissao de 5%.");
-    }
-
-    @Test
-    @DisplayName("Deve lancar excecao ao tentar calcular taxa para valor de lance invalido")
-    public void deveLancarExcecaoParaValorInvalido() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            leilaoService.calcularTaxaPlataforma(0.0);
-        }, "Valores menores ou iguais a zero devem disparar IllegalArgumentException.");
+        try {
+            service.registrarLance(leilao, 102L, 1200.0, false);
+            fail("Deveria ter lançado exceção pois não aceitou os termos");
+        } catch (IllegalArgumentException e) {
+            assertEquals("O comprador deve aceitar os termos antes de dar um lance.", e.getMessage());
+        }
     }
 }
-
