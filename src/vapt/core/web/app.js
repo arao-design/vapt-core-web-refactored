@@ -5,6 +5,7 @@
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Elementos do formulário
     const formLance = document.getElementById('form-lance');
     const compradorInput = document.getElementById('compradorId');
     const valorInput = document.getElementById('valorLance');
@@ -12,8 +13,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const maiorLanceSpan = document.getElementById('maior-lance');
     const mensagemBox = document.getElementById('mensagem-status');
 
+    // Elementos do Modal de Termos
+    const modal = document.getElementById('modal-termos');
+    const linkTermos = document.getElementById('link-termos');
+    const fecharModal = document.getElementById('fechar-modal');
+    const btnEntendi = document.getElementById('btn-entendi');
+
     let maiorLanceAtual = 1000.00;
 
+    // Funções para abrir/fechar o Modal
+    const abrirModal = (e) => {
+        if (e) e.preventDefault();
+        modal.classList.remove('hidden');
+    };
+
+    const ocultarModal = () => {
+        modal.classList.add('hidden');
+    };
+
+    // Eventos do Modal
+    linkTermos.addEventListener('click', abrirModal);
+    fecharModal.addEventListener('click', ocultarModal);
+    
+    // Ao clicar em Concordar, aceita os termos e fecha o modal
+    btnEntendi.addEventListener('click', () => {
+        termosCheckbox.checked = true;
+        ocultarModal();
+    });
+
+    // Submissão do formulário
     formLance.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -21,31 +49,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const valorLance = parseFloat(valorInput.value);
         const aceitouTermos = termosCheckbox.checked;
 
-        // Validação obrigatória dos Termos de Uso
+        // Validação dos Termos de Uso
         if (!aceitouTermos) {
-            const mensagemTermos = 'ATENÇÃO: O comprador deve aceitar os termos antes de dar um lance.';
-            alert(mensagemTermos); // Notificação em pop-up na tela
-            exibirMensagem(mensagemTermos, false);
+            const mensagem = 'O comprador deve aceitar os termos antes de dar um lance.';
+            exibirMensagem(mensagem, false);
+            abrirModal();
             return;
         }
 
         // Validação do valor do lance
         if (valorLance <= maiorLanceAtual) {
-            const mensagemValor = `O valor do lance deve ser superior ao maior lance atual (R$ ${maiorLanceAtual.toFixed(2)}).`;
-            alert(mensagemValor);
-            exibirMensagem(mensagemValor, false);
+            const mensagem = `O valor do lance deve ser maior que o atual (R$ ${maiorLanceAtual.toFixed(2)}).`;
+            exibirMensagem(mensagem, false);
             return;
         }
 
-        // Sucesso ao registrar lance
+        // Sucesso
         maiorLanceAtual = valorLance;
         maiorLanceSpan.textContent = maiorLanceAtual.toFixed(2);
         
-        const mensagemSucesso = `Lance de R$ ${valorLance.toFixed(2)} registrado com sucesso para o comprador ID: ${compradorId}!`;
-        alert(mensagemSucesso);
+        const mensagemSucesso = `Lance de R$ ${valorLance.toFixed(2)} registrado com sucesso para o comprador ${compradorId}!`;
         exibirMensagem(mensagemSucesso, true);
 
-        // Limpeza dos campos
         valorInput.value = '';
         termosCheckbox.checked = false;
     });

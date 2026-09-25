@@ -18,7 +18,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </header>
 
         <main>
-            <!-- Seção de detalhes do leilão -->
+            <!-- Detalhes do leilão -->
             <section class="card">
                 <h2>Item em Leilão: <span id="item-nome">Notebook Gamer</span></h2>
                 <p><strong>ID do Leilão:</strong> <span id="leilao-id">1</span></p>
@@ -26,7 +26,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <p class="lance-destaque">Maior Lance Atual: R$ <span id="maior-lance">1000.00</span></p>
             </section>
 
-            <!-- Formulário de inclusão de lance -->
+            <!-- Formulário de lance -->
             <section class="card">
                 <h3>Registrar Novo Lance</h3>
                 <form id="form-lance">
@@ -42,7 +42,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                     <div class="form-group checkbox-group">
                         <input type="checkbox" id="aceitaTermos">
-                        <label for="aceitaTermos">Aceito os termos antes de dar um lance</label>
+                        <label for="aceitaTermos">
+                            Li e aceito os <a href="#" id="link-termos">Termos de Uso e Regras do Leilão</a>
+                        </label>
                     </div>
 
                     <button type="submit" id="btn-submeter">Enviar Lance</button>
@@ -51,6 +53,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <div id="mensagem-status" class="status-box hidden"></div>
             </section>
         </main>
+    </div>
+
+    <!-- Modal que abre automaticamente ao carregar o site (sem a classe hidden) -->
+    <div id="modal-termos" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="fechar-modal">&times;</span>
+            <h2>Termos de Uso e Regras do Leilão VAPT</h2>
+            <div class="modal-body">
+                <p><strong>1. Funcionamento dos Lances:</strong> Todos os lances registrados são definitivos e vinculantes.</p>
+                <p><strong>2. Valor Mínimo:</strong> O valor digitado deve ser obrigatoriamente superior ao maior lance atual exibido na tela.</p>
+                <p><strong>3. Confirmação:</strong> Ao dar um lance, o comprador compromete-se com a compra e o pagamento do item caso seja o vencedor ao término do tempo estipulado.</p>
+                <p><strong>4. Cancelamento:</strong> Não é permitido o cancelamento ou desistência do lance após a confirmação no sistema.</p>
+            </div>
+            <button id="btn-entendi" type="button">Concordar e Aceitar Termos</button>
+        </div>
     </div>
 
     <script src="app.js"></script>
