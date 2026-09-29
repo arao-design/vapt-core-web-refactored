@@ -7,69 +7,502 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema VAPT - Gestão de Leilões</title>
-    <link rel="stylesheet" href="css.css">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>VaptCore - Leilões Online</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Ícones -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <h1>Plataforma de Leilões VAPT</h1>
-        </header>
 
-        <main>
-            <!-- Detalhes do leilão -->
-            <section class="card">
-                <h2>Item em Leilão: <span id="item-nome">Notebook Gamer</span></h2>
-                <p><strong>ID do Leilão:</strong> <span id="leilao-id">1</span></p>
-                <p><strong>Vendedor ID:</strong> <span id="vendedor-id">101</span></p>
-                <p class="lance-destaque">Maior Lance Atual: R$ <span id="maior-lance">1000.00</span></p>
-            </section>
+    <!-- ================= HEADER ================= -->
 
-            <!-- Formulário de lance -->
-            <section class="card">
-                <h3>Registrar Novo Lance</h3>
-                <form id="form-lance">
-                    <div class="form-group">
-                        <label for="compradorId">ID do Comprador:</label>
-                        <input type="number" id="compradorId" required placeholder="Ex: 102">
-                    </div>
+    <header class="header">
 
-                    <div class="form-group">
-                        <label for="valorLance">Valor do Lance (R$):</label>
-                        <input type="number" step="0.01" id="valorLance" required placeholder="Ex: 1200.00">
-                    </div>
-
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="aceitaTermos">
-                        <label for="aceitaTermos">
-                            Li e aceito os <a href="#" id="link-termos">Termos de Uso e Regras do Leilão</a>
-                        </label>
-                    </div>
-
-                    <button type="submit" id="btn-submeter">Enviar Lance</button>
-                </form>
-
-                <div id="mensagem-status" class="status-box hidden"></div>
-            </section>
-        </main>
-    </div>
-
-    <!-- Modal que abre automaticamente ao carregar o site (sem a classe hidden) -->
-    <div id="modal-termos" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="fechar-modal">&times;</span>
-            <h2>Termos de Uso e Regras do Leilão VAPT</h2>
-            <div class="modal-body">
-                <p><strong>1. Funcionamento dos Lances:</strong> Todos os lances registrados são definitivos e vinculantes.</p>
-                <p><strong>2. Valor Mínimo:</strong> O valor digitado deve ser obrigatoriamente superior ao maior lance atual exibido na tela.</p>
-                <p><strong>3. Confirmação:</strong> Ao dar um lance, o comprador compromete-se com a compra e o pagamento do item caso seja o vencedor ao término do tempo estipulado.</p>
-                <p><strong>4. Cancelamento:</strong> Não é permitido o cancelamento ou desistência do lance após a confirmação no sistema.</p>
-            </div>
-            <button id="btn-entendi" type="button">Concordar e Aceitar Termos</button>
+        <div class="logo">
+            <i class="fa-solid fa-gavel"></i>
+            <span>Vapt<span>Core</span></span>
         </div>
-    </div>
 
-    <script src="app.js"></script>
+        <nav class="menu">
+
+            <a href="#" class="active">
+                <i class="fa-solid fa-house"></i>
+                Início
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-gavel"></i>
+                Leilões
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-list"></i>
+                Categorias
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-circle-question"></i>
+                Como Funciona
+            </a>
+
+        </nav>
+
+        <div class="header-right">
+
+            <div class="search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Buscar itens...">
+            </div>
+
+            <a href="#" class="login">
+                <i class="fa-regular fa-user"></i>
+                Entrar
+            </a>
+
+            <button class="register">
+                Cadastrar
+            </button>
+
+        </div>
+
+        <button class="menu-mobile" id="menuMobile">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+    </header>
+
+
+    <!-- ================= CONTEÚDO ================= -->
+
+    <main class="container">
+
+        <!-- ================= LEILÃO PRINCIPAL ================= -->
+
+        <section class="auction-main">
+
+            <!-- IMAGEM -->
+
+            <div class="product-image">
+
+                <span class="status" id="auctionStatus">
+                    <span class="status-dot"></span>
+                    EM ANDAMENTO
+                </span>
+
+                <img
+                    src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1000&q=80"
+                    alt="Notebook Gamer">
+
+                <div class="image-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+            </div>
+
+
+            <!-- INFORMAÇÕES -->
+
+            <div class="auction-info">
+
+                <div class="category">
+                    <i class="fa-solid fa-laptop"></i>
+                    INFORMÁTICA
+                </div>
+
+                <h1>Notebook Gamer</h1>
+
+                <p class="description">
+                    Notebook gamer de alto desempenho, ideal para
+                    jogos e tarefas pesadas. Equipado com processador
+                    Intel i7, 16GB de RAM, SSD de 512GB e placa de
+                    vídeo dedicada.
+                </p>
+
+
+                <!-- ESPECIFICAÇÕES -->
+
+                <div class="specifications">
+
+                    <div class="spec">
+                        <i class="fa-solid fa-microchip"></i>
+
+                        <div>
+                            <strong>Intel i7</strong>
+                            <small>Processador</small>
+                        </div>
+                    </div>
+
+                    <div class="spec">
+                        <i class="fa-solid fa-memory"></i>
+
+                        <div>
+                            <strong>16GB</strong>
+                            <small>RAM</small>
+                        </div>
+                    </div>
+
+                    <div class="spec">
+                        <i class="fa-solid fa-hard-drive"></i>
+
+                        <div>
+                            <strong>512GB</strong>
+                            <small>SSD</small>
+                        </div>
+                    </div>
+
+                    <div class="spec">
+                        <i class="fa-solid fa-gamepad"></i>
+
+                        <div>
+                            <strong>RTX 3060</strong>
+                            <small>Placa de Vídeo</small>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- LANCE ATUAL -->
+
+                <div class="auction-bottom">
+
+                    <div class="current-bid" id="currentBidBox">
+
+                        <div class="bid-title">
+                            <i class="fa-solid fa-gavel"></i>
+                            Maior Lance Atual
+                        </div>
+
+                        <div class="bid-value" id="currentBid">
+                            R$ 4.250,00
+                        </div>
+
+                    </div>
+
+
+                    <div class="auction-data">
+
+                        <div>
+                            <i class="fa-solid fa-users"></i>
+
+                            <div>
+                                <small>Total de lances</small>
+                                <strong id="bidCount">18</strong>
+                            </div>
+                        </div>
+
+                        <div>
+                            <i class="fa-regular fa-clock"></i>
+
+                            <div>
+                                <small>Tempo restante</small>
+                                <strong id="timer">02:30</strong>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FORMULÁRIO -->
+
+            <aside class="bid-panel">
+
+                <div class="panel-icon">
+                    <i class="fa-solid fa-gavel"></i>
+                </div>
+
+                <h2>Faça seu lance</h2>
+
+                <p>
+                    Digite o valor do seu lance
+                    (mínimo de <strong id="minimumBid">R$ 4.300,00</strong>)
+                </p>
+
+                <div class="input-wrapper">
+
+                    <span>R$</span>
+
+                    <input
+                        type="text"
+                        id="bidInput"
+                        placeholder="Ex.: 4300,00"
+                        autocomplete="off">
+
+                </div>
+
+                <button class="bid-button" id="bidButton">
+                    <i class="fa-solid fa-gavel"></i>
+                    Enviar Lance
+                </button>
+
+                <div class="secure-message">
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <span>
+                        Seu lance é seguro e só será confirmado
+                        após a validação do sistema.
+                    </span>
+                </div>
+
+            </aside>
+
+        </section>
+
+
+        <!-- ================= OUTROS LEILÕES ================= -->
+
+        <section class="other-auctions">
+
+            <div class="section-header">
+
+                <h2>
+                    <i class="fa-regular fa-clock"></i>
+                    Outros Leilões em Andamento
+                </h2>
+
+                <a href="#">
+                    Ver todos
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+
+            <div class="auction-grid">
+
+
+                <!-- CARD 1 -->
+
+                <article class="auction-card">
+
+                    <div class="card-image">
+
+                        <span class="card-status">
+                            <span></span>
+                            EM ANDAMENTO
+                        </span>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=700&q=80"
+                            alt="iPhone">
+
+                        <span class="card-bids">
+                            22 lances
+                        </span>
+
+                    </div>
+
+                    <div class="card-content">
+
+                        <h3>iPhone 15 Pro</h3>
+
+                        <span class="card-category">
+                            <i class="fa-solid fa-mobile-screen"></i>
+                            Celulares
+                        </span>
+
+                        <div class="card-footer">
+
+                            <div>
+                                <small>Maior lance atual</small>
+                                <strong>R$ 3.780,00</strong>
+                            </div>
+
+                            <div class="card-time">
+                                <i class="fa-regular fa-clock"></i>
+
+                                <span>
+                                    01h 12m 43s
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- CARD 2 -->
+
+                <article class="auction-card">
+
+                    <div class="card-image">
+
+                        <span class="card-status">
+                            <span></span>
+                            EM ANDAMENTO
+                        </span>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=700&q=80"
+                            alt="PlayStation 5">
+
+                        <span class="card-bids">
+                            15 lances
+                        </span>
+
+                    </div>
+
+                    <div class="card-content">
+
+                        <h3>PlayStation 5</h3>
+
+                        <span class="card-category">
+                            <i class="fa-solid fa-gamepad"></i>
+                            Games
+                        </span>
+
+                        <div class="card-footer">
+
+                            <div>
+                                <small>Maior lance atual</small>
+                                <strong>R$ 2.450,00</strong>
+                            </div>
+
+                            <div class="card-time">
+                                <i class="fa-regular fa-clock"></i>
+
+                                <span>
+                                    03h 28m 12s
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- CARD 3 -->
+
+                <article class="auction-card">
+
+                    <div class="card-image">
+
+                        <span class="card-status">
+                            <span></span>
+                            EM ANDAMENTO
+                        </span>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1544117519-31a4b719223d?auto=format&fit=crop&w=700&q=80"
+                            alt="Apple Watch">
+
+                        <span class="card-bids">
+                            9 lances
+                        </span>
+
+                    </div>
+
+                    <div class="card-content">
+
+                        <h3>Apple Watch Series 8</h3>
+
+                        <span class="card-category">
+                            <i class="fa-regular fa-clock"></i>
+                            Relógios
+                        </span>
+
+                        <div class="card-footer">
+
+                            <div>
+                                <small>Maior lance atual</small>
+                                <strong>R$ 1.980,00</strong>
+                            </div>
+
+                            <div class="card-time">
+                                <i class="fa-regular fa-clock"></i>
+
+                                <span>
+                                    05h 16m 37s
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- CARD 4 -->
+
+                <article class="auction-card">
+
+                    <div class="card-image">
+
+                        <span class="card-status">
+                            <span></span>
+                            EM ANDAMENTO
+                        </span>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?auto=format&fit=crop&w=700&q=80"
+                            alt="Bicicleta">
+
+                        <span class="card-bids">
+                            12 lances
+                        </span>
+
+                    </div>
+
+                    <div class="card-content">
+
+                        <h3>Bicicleta Aro 29</h3>
+
+                        <span class="card-category">
+                            <i class="fa-solid fa-bicycle"></i>
+                            Esportes
+                        </span>
+
+                        <div class="card-footer">
+
+                            <div>
+                                <small>Maior lance atual</small>
+                                <strong>R$ 1.220,00</strong>
+                            </div>
+
+                            <div class="card-time">
+                                <i class="fa-regular fa-clock"></i>
+
+                                <span>
+                                    07h 42m 05s
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="js/script.js"></script>
+
 </body>
 </html>
